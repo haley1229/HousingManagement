@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+
+    <div class="main_content">
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li class="active">
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                        <li >
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                         <li >
+                            <a href="/forum/">Forum</a>
+                        </li>
+                    </ul>
+                    <grammarly>
+                        <div class="_1BN1N Kzi1t BD-0J _7_mnr _2DJZN">
+                            <div class="_1HjH7">
+                                <div class="_3qe6h">
+                                </div>
+                            </div>
+                        </div>
+                    </grammarly>
+                </div>
+            </div>
+        <div class="sub_content">
+            <h1>Maintenance</h1>
+            <p>View and submit your maintenance order below.</p>
+            <hr>
+            <div >
+                <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/maintenance_add/'">
+                    <span class="glyphicon glyphicon-wrench"></span>&nbsp;Submit a maintenance order
+                </button>
+            </div>
+            <h3>Maintenance History</h3>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Category</th>
+                    <th>Desciption</th>
+                    <th>Status</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for m in maintain_info %}
+                    <tr>
+                        <td>{{ m.apply_date }}</td>
+                        <td>{{ m.maintenance_location }}</td>
+                        <td>{{ m.maintenance_category }}</td>
+                        <td>{{ m.maintenance_describe }}</td>
+                        <td>{{ m.maintenance_status }}</td>
+                        {% if m.maintenance_status == "Submitted" %}
+                            <td><a href="/maintenance_edit/?id={{ m.maintenance_id }}">edit</a></td>
+                            <td><a href="/maintenance_delete/?id={{ m.maintenance_id }}">delete</a></td>
+                        {% else %}
+                            <td>edit</td>
+                            <td>delete</td>
+                        {% endif %}
+
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+</div>
+    </div>
+
+
+{% endblock %}
+</body>
+</html>

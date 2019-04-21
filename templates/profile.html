@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+  function chk_pwd_form(){
+    var oldpwd = document.getElementById("curentpwd");
+    var pwd = document.getElementById("newpwd");
+    var pwd1 = document.getElementById("newpwd1");
+    if (oldpwd.value != {{ password }}){
+      alert("Current password is incorrect!");
+      return false;
+      //pass.focus();
+    }
+    if(pwd.value != pwd1.value){
+      alert("Password are not matched!");
+      return false;
+      //pass.focus();
+    }
+  }
+  </script>
+
+    <div class="main_content">
+
+
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li >
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                         <li >
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                        <li >
+                            <a href="/forum/">Forum</a>
+                        </li>
+                    </ul>
+                    <grammarly>
+                        <div class="_1BN1N Kzi1t BD-0J _7_mnr _2DJZN">
+                            <div class="_1HjH7">
+                                <div class="_3qe6h">
+                                </div>
+                            </div>
+                        </div>
+                    </grammarly>
+                </div>
+            </div>
+        <div class="sub_content">
+            <h1>My account</h1>
+            <p>View and edit your personal info below.</p>
+            <hr>
+                <div class="span12">
+                    <div class="tabbable" id="tabs-734095">
+                        <ul class="nav nav-tabs">
+                            <li class = "active">
+                                <a href="#panel-215978" data-toggle="tab">Personal Info</a>
+                            </li>
+                            <li >
+                                <a href="#panel-408967" data-toggle="tab">Reset Password</a>
+                            </li>
+                            <li>
+                                <a href="#panel-408968" data-toggle="tab">Lease Info</a>
+                            </li>
+                        </ul>
+
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="panel-215978">
+                                <div class="sub_content" >
+
+                            <h3>Personal Info</h3>
+                                <hr>
+                                <div class="left_sub_content" style="height: 100px">
+                                    <button type="button" class="btn btn-default btn-circle" style=" width: 250px;height:250px;border-radius:50%; margin-left: 30px">
+                                        <i class="glyphicon glyphicon-user" style="font-size: 150px"></i></button>
+                                </div>
+
+                                <div class="right_sub_content">
+                                <form class="form-inline" method="post" action="/profile/">
+                                     {% csrf_token %}
+                                      <div class="form-group" id="form_format">
+                                        <label for="exampleInputName2">First Name</label><br>
+                                        <input type="text" class="form-control" id="custom_input" name="firstname" value="{{ firstname }}">
+                                      </div>
+
+                                    <div class="form-group" id="form_format">
+                                        <label for="exampleInputName2">Last Name</label><br>
+                                        <input type="text" class="form-control" id="custom_input" name="lastname" value="{{ lastname }}">
+                                      </div>
+
+                                      <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Email</label><br>
+                                        <input type="email" class="form-control" id="custom_input" name="email" value="{{ email }}">
+                                      </div>
+
+                                        <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Phone</label><br>
+                                        <input type="text" class="form-control" id="custom_input" name="phone" value="{{ phone }}">
+                                      </div>
+
+                                    <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Gender</label><br>
+                                        <input type="text" class="form-control" id="custom_input" name="gender" value="{{ gender }}">
+
+                                    </div>
+
+
+                                    <br><br>
+                                      <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="panel-408967">
+                                <div class="sub_content" >
+
+                            <h3>Reset Password</h3>
+                                <hr>
+
+
+                                <div class="sub_content" >
+
+                                <form class="form-inline" method="get" action="/profile/" onsubmit="return chk_pwd_form()">
+
+                                    <div class="sub_content" style="width:30%" >
+
+                                      <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Current Password</label><br>
+                                        <input type="password" class="form-control" id="curentpwd" name="curentpwd" style="width: 250px;" required>
+
+                                      </div>
+                                     <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">New Password</label><br>
+                                        <input type="password" class="form-control" id="newpwd" name="newpwd"  style="width: 250px;" required>
+                                      </div>
+                                      <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Confirm New Password</label><br>
+                                        <input type="password" class="form-control" id="newpwd1" name="newpwd1"  style="width: 250px;" required>
+                                      </div>
+                                      <div class="form-group" style="padding-top: 10px">
+                                          <button type="submit"  class="btn btn-primary">Submit</button>
+
+                                        </div>
+                                      </div>
+                                    </form>
+
+                                </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane" id="panel-408968">
+                                <div class="sub_content" >
+
+                                <h3>Lease Info</h3>
+                                <hr>
+                                    <table class="table table-striped">
+                                          <thead>
+                                          <tr>
+                                              <th>ID</th>
+                                              <th>Room No.</th>
+                                              <th>Move-In</th>
+                                              <th>Move-Out</th>
+                                              <th>Rent</th>
+
+                                          </tr>
+                                          </thead>
+                                        <tbody>
+                                        {% for l in lease %}
+                                        <tr>
+                                            <td>{{ l.renter_id}}</td>
+                                            <td>{{ l.room_id }}</td>
+                                            <td>{{ l.movein_date }}</td>
+                                            <td>{{ l.moveout_date }}</td>
+                                            <td>{{ l.rent_fee }}</td>
+
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</div>
+    </div>
+
+
+{% endblock %}
+</body>
+</html>

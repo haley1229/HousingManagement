@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation</title>
+</head>
+<script language="JavaScript">
+    function clock(){
+        now = new Date();
+        var year=now.getFullYear();
+        var month=now.getMonth();
+        var date=now.getDate();
+
+
+        now_date=year+"-"+month+"-"+date;
+        start_date = document.getElementById("date").innerText;
+        if (start_date > now_date){
+            //document.getElementById("info1").innerHTML=start_date;
+            document.getElementById('reserve_edit').disabled=false;
+            document.getElementById('reserve_delete').disabled=false;
+        }
+
+
+    }
+</script>
+<body onload="clock()">
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+
+    <div class="main_content">
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li>
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                        <li class="active">
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                         <li >
+                            <a href="/forum/">Forum</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <div class="sub_content">
+            <h1>Reservation</h1>
+            <p>View and submit your reservation of amenity below.</p>
+            <hr>
+            <div >
+                <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/reservation_add/'">
+                    <span class="glyphicon glyphicon-calendar"></span>&nbsp;Reservation for amentity rooms
+                </button>
+            </div>
+            <h3>Reservation History</h3>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Amentity Name</th>
+                    <th>Amentity Type</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ri in amenity_info %}
+                    <tr>
+                        <td>{{ ri.amenity_id }}</td>
+
+                        <td>{{ ri.amenity_type }}</td>
+                        <td id="date">{{ ri.start_date }}</td>
+                    <!--
+                        <td id="info1"></td>
+                    -->
+                        <td>{{ ri.start_time }}</td>
+                        <td><button id="reserve_delete" onclick='window.location.href="/reservation_delete/?id={{ ri.reservation_id }}"' disabled>delete</button></td>
+
+                    <!--
+                                            <td><button id="reserve_edit"  onclick='window.location.href="/reservation_edit/?id={{ ri.reservation_id }}"' disabled>edit</button></td>
+
+                        {% if ri.amenity_status == 0 %}
+                        <td>Available</td>
+                        {% else %}
+                        <td>booked</td>
+                        {% endif %}
+                    -->
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+</div>
+    </div>
+
+{% endblock %}
+
+
+</body>
+</html>

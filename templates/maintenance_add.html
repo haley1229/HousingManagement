@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+
+
+    <div class="main_content">
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li class="active">
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                        <li >
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                        <li >
+                            <a href="/forum/">Forum</a>
+                        </li>
+                    </ul>
+                    <grammarly>
+                        <div class="_1BN1N Kzi1t BD-0J _7_mnr _2DJZN">
+                            <div class="_1HjH7">
+                                <div class="_3qe6h">
+                                </div>
+                            </div>
+                        </div>
+                    </grammarly>
+                </div>
+            </div>
+        <div class="sub_content">
+            <h1>Submit Maintenance Order</h1>
+            <p>Submit your maintenance order below.</p>
+            <hr>
+            <div class="sub_content" style="width:50%; padding-left: 50px" >
+                <form class="form-inline" method="post" action="/maintenance_add/" >
+                    {% csrf_token %}
+
+                    <div class="form-group" id="form_format">
+                        <label>Email</label><br>
+                        <input type="text" class="form-control" id="custom_input1" name="email" value="{{ email }}"  disabled>
+                    </div>
+
+                    <div class="form-group" id="form_format">
+                        <label>Phone</label><br>
+                        <input type="text" class="form-control" id="custom_input1" name="phone"  value="{{ phone }}" disabled>
+                    </div>
+
+                    <div class="form-group" id="form_format">
+                        <label>Room No.</label><br>
+                        <input type="text" class="form-control" id="custom_input1" name="roomno" value="{{ roomno}}" disabled>
+                    </div>
+                    <div class="form-group" id="form_format">
+                        <label>Location</label><br>
+                        <select class="form-control" id="custom_input1" name="location" required>
+                            <option>Bedroom A</option>
+                            <option>Bedroom B</option>
+                            <option>Bedroom C</option>
+                            <option>Bedroom D</option>
+                            <option>Bathroom A</option>
+                            <option>Bathroom B</option>
+                            <option>Bathroom C</option>
+                            <option>Bathroom D</option>
+                            <option>Common Area</option>
+                            <option>Kitchen</option>
+                            <option>Laundry Room</option>
+                            <option>Patio</option>
+                            <option>Utility Closet</option>
+                            <option>Others</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group" id="form_format"  >
+                        <label>Category</label><br>
+                        <select class="form-control" id="custom_input1" name="category" required>
+                            <option>Carpet</option>
+                            <option>Closet Doors</option>
+                            <option>Coffee Table</option>
+                            <option>Doors</option>
+                            <option>Furnace</option>
+                            <option>Plumbing</option>
+                            <option>Smoke Detector</option>
+                            <option>Toliet</option>
+                            <option>Tub/Shower</option>
+                            <option>Walls</option>
+                            <option>Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="form_format">
+                        <label>Description</label><br>
+                        <textarea class="form-control" rows="5" name="description" id="custom_input1" required></textarea>
+                    </div>
+                    <div class="form-group" style="padding-top: 10px">
+                        <label>
+                        <input type="checkbox" value="" style="font-size: 200px" id="agreement" required>
+                            &nbsp; I agree to let the property staff enter my unit to work on this maintenance issue.
+
+                        </label>
+                    </div>
+                    <div class="form-group" style="padding-top: 10px">
+                        <button type="submit"  class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-default" style="margin-left: 10px" onclick="window.location.href='/maintenance/'">Cancel</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+            </div>
+        </div>
+
+</div>
+    </div>
+
+{% endblock %}
+</body>
+</html>

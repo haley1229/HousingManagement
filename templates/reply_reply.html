@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+</head>
+<script language="JavaScript">
+    function clock(){
+        now = new Date();
+        var year=now.getFullYear();
+        var month=now.getMonth();
+        var date=now.getDate();
+
+
+        now_date=year+"-"+month+"-"+date;
+        start_date = document.getElementById("date").innerText;
+        if (start_date > now_date){
+            //document.getElementById("info1").innerHTML=start_date;
+            document.getElementById('reserve_edit').disabled=false;
+            document.getElementById('reserve_delete').disabled=false;
+        }
+
+
+    }
+</script>
+<body onload="clock()">
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+
+    <div class="main_content">
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li>
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                        <li >
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                        <li class="active">
+                            <a href="/forum/">Forum</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <div class="sub_content">
+            {% for r in detail %}
+                <div style="padding-top: 20px">
+                    <ol class="breadcrumb">
+                      <li><a href="forum/">Forum</a></li>
+                      <li><a href="#">{{ r.post_tag  }}</a></li>
+                      <li class="active">{{ r.reply_subject  }}</li>
+                    </ol>
+                </div>
+                    <!--reply detail part-->
+                    <div style="width:90%;margin: 0 auto;">
+
+                        <h4>{{ r.reply_subject }}</h4>
+                        <div class="media" >
+                              <div class="media-left">
+                                <a href="#">
+                                    <span class="media-object" >
+                                        <i class="glyphicon glyphicon-user" style="font-size: 50px"></i>
+
+                                    </span>
+                                </a>
+                              </div>
+                              <div class="media-body" >
+                                <p class="media-heading">{{ r.firstname }}&nbsp;{{ r.lastname }}</p>
+                                <span style="color: #8c8c8c">{{ r.reply_date }}</span>
+                              </div>
+                              <div style="padding-left: 60px; padding-top: 10px" >
+                                <pre style="margin-left:-10px;background-color: white; border: white; font-size:16px;font-family: Arial ">{{ r.reply_message }}</pre>
+                                {% if r.reply_img != "" %}
+                                        <img  src="../media/{{ r.reply_img }}" width="400" height="233">
+                                        <br>
+                                    {% endif %}
+                                    <div style="margin-top: 10px"><a>Reply</a></div>
+                                </div>
+                        </div>
+
+                    </div>
+                <div class="panel panel-default" style="margin-top: 20px">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" style="display: inline">Reply</h3>
+                    </div>
+                    <div class="panel-body" style="width:50%;margin: 0 auto">
+                        <form class="form-inline" method="post" action="/reply_reply_add/" enctype="multipart/form-data" >
+                    {% csrf_token %}
+
+                    <div class="form-group" id="form_format">
+                        <label>Subject</label><br>
+                        <input type="text" class="form-control" id="custom_input1" name="subject" value="Re:{{ r.reply_subject }}"  required>
+                        <input type="hidden" class="form-control" id="custom_input1" name="postid" value="{{ r.post_id }}">
+                        <input type="hidden" class="form-control" id="custom_input1" name="parentid" value="{{ r.reply_id }}">
+
+
+                    </div>
+
+
+
+                    <div class="form-group" id="form_format">
+                        <label>Message</label><br>
+                        <textarea class="form-control" rows="10" name="message" id="custom_input1" required></textarea>
+                    </div>
+
+                    <div id="form_format">
+                         <label>Image</label><br>
+                         <input type="file" name="img" accept="image/*">
+                     </div>
+
+                    <div class="form-group" style="padding-top: 30px">
+                        <button type="submit"  class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-default" style="margin-left: 10px" onclick="window.location.href='/post_view/?id={{ p.post_id }}'">Cancel</button>
+                    </div>
+
+                </form>
+
+                    </div>
+
+                </div>{% endfor %}
+
+        </div>
+        </div>
+
+</div>
+    </div>
+
+{% endblock %}
+
+
+</body>
+</html>

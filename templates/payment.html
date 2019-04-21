@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+    <div class="main_content">
+    <div class="container-fluid">
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li class="active">
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li>
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                        <li >
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                         <li >
+                            <a href="/forum/">Forum</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <div class="sub_content">
+            <h1>Payments</h1>
+            <p>View your payment info below.</p>
+
+             <hr>
+        <div>
+        <div  style="width: 310px; text-align: center;height: 110px; background-color:#666666; margin-bottom: 20px; ">
+                <p style="font-size: 17px; padding-top: 15px; color: #CBCBCB">Balance</p>
+                <p style="margin-top:-10px;font-size: 40px; color: #97AE69"><span style="font-size: 20px; padding-right: 5px; margin-left: -20px">$</span>{{ current_balance }}</p>
+
+        </div>
+
+        </div>
+
+                <div class="span12">
+                    <div class="tabbable" id="tabs-734095">
+                        <ul class="nav nav-tabs">
+                            <li class = "active">
+                                <a href="#panel-215978" data-toggle="tab">Payment History</a>
+                            </li>
+                            <li >
+                                <a href="#panel-408967" data-toggle="tab">Balance History</a>
+                            </li>
+                            <li>
+                                <a href="#panel-408968" data-toggle="tab">Make Payments</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <!-- Payment history -->
+                            <div class="tab-pane active" id="panel-215978">
+                                <div class="sub_content" >
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Unit</th>
+                                            <th>Fee type</th>
+                                            <th>Fee Amount</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in pi %}
+                                        <tr>
+                                            <td>{{ i.pay_date }}</td>
+                                            <td>{{ i.room_id }}</td>
+                                            <td>{{ i.payment_type }}</td>
+                                            <td>{{ i.fee }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- balance -->
+                            <div class="tab-pane" id="panel-408967">
+                                <div class="sub_content" >
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Appiled Date</th>
+                                            <th>Unit</th>
+                                            <th>Fee type</th>
+                                            <th>Charges</th>
+                                            <th>Credits</th>
+                                            <th>Balance</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in bi %}
+                                        <tr>
+                                            {% if i.pay_record == 1 %}
+
+                                            <td>{{ i.pay_date }}</td>
+                                            <td>{{ i.room_id }}</td>
+                                            <td>{{ i.payment_type }}</td>
+                                            <td></td>
+                                            <td style="color: green">{{ i.fee }}</td>
+                                                {% for key, values in balance.items %}
+                                                    {% if key == i.id %}
+                                                    <td > {{values}}</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% elif i.pay_record == 0 %}
+                                            <td>{{ i.pay_date }}</td>
+                                            <td>{{ i.room_id }}</td>
+                                            <td>{{ i.payment_type }}</td>
+                                            <td style="color: red" >{{ i.fee }}</td>
+                                            <td></td>
+                                                {% for key, values in balance.items %}
+                                                    {% if key == i.id %}
+                                                        <td > {{values}}</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                       <!-- <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{ balance }}</td>
+                                        </tr> -->
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- make payments -->
+                            <div class="tab-pane" id="panel-408968">
+                            <div class="sub_content" style="padding-top: 20px" >
+                                <form class="form-inline" method="post" action="/make_pay/" >
+                                    {% csrf_token %}
+
+                                    <div class="sub_content" style="width:30%">
+
+                                      <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Fee Type</label><br>
+                                         <select class="form-control" id="custom_input" name="type" required>
+                                            <option>Utility</option>
+                                            <option>Rent</option>
+                                             <option>Late Fee</option>
+                                            <option>Others</option>
+                                        </select>
+                                      </div>
+                                     <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Card Number</label><br>
+                                        <input type="text" class="form-control" id="newpwd" name="cardnumber"  style="width: 250px;" required>
+                                      </div>
+                                        <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Expired Date</label><br>
+                                        <input type="text" class="form-control" id="newpwd1" name="expireddate"  style="width: 250px;" required>
+                                      </div>
+                                      <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">CVV</label><br>
+                                        <input type="text" class="form-control" id="newpwd1" name="cvv"  style="width: 250px;" required>
+                                      </div>
+                                        <div class="form-group" id="form_format">
+                                        <label for="exampleInputEmail2">Payment Amount</label><br>
+                                        <input type="number" step="0.01" class="form-control" id="newpwd1" name="amount"  style="width: 250px;" required>
+                                      </div>
+                                      <div class="form-group" style="padding-top: 10px">
+                                          <button type="submit"  class="btn btn-primary">Submit</button>
+
+                                        </div>
+                                      </div>
+                                    </form>
+
+
+                            </div>
+                        </div>
+
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}
+</body>
+</html>

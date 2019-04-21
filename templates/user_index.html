@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+    <div class="main_content">
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+            <h1>Welcome</h1>
+		</div>
+	</div>
+</div>
+    </div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+
+
+<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'bootstrap-3.3.7/dist/css/bootstrap.min.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+
+
+    <div class="main_content">
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li >
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                        <li class="active">
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        <div class="sub_content">
+            <h1>Reserve an amentity room</h1>
+            <p>Submit your reservation below.</p>
+            <hr>
+            <div class="sub_content" style="width:50%; padding-left: 50px" >
+                <form class="form-inline" method="post" action="/reservation_add/" >
+                    {% csrf_token %}
+
+                    <div class="form-group" id="form_format">
+                        <label>Email</label><br>
+                        <input type="text" class="form-control" id="custom_input2" name="email" value="{{ email }}"  disabled>
+                    </div>
+
+                    <div class="form-group" id="form_format">
+                        <label>Phone</label><br>
+                        <input type="text" class="form-control" id="custom_input2" name="phone"  value="{{ phone }}" disabled>
+                    </div>
+
+                    <div class="form-group" id="form_format">
+                        <label>Category</label><br>
+                        <select class="form-control" id="custom_input2" name="room" required>
+
+                            {% for a in amenity_info %}
+                                <option>{{ a.amenity_id }}</option>
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <div class="form-group" id="form_format" style="display: inline; float: left" >
+                        <label>Start Date</label><br>
+
+                        <div class="input-group date form_datetime col-md-5"  data-date-format="dd MM yyyy " data-link-field="dtp_input1">
+                            <input class="form-control" name="date"  style="width: 150px" type="text" value="{{ start_date }}" required>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <!--<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>-->
+
+                        </div>
+                        <button  style="margin-left: 10px" type="submit"  class="btn btn-primary">Check</button>
+
+                    </div>
+                </form>
+                    <form action="/reservation_add/" method=get">
+
+                     <div class="form-group" id="form_format" style="display: inline; float: left" >
+                        <label>Start Time</label><br>
+                        <input name="a_room" value="{{ room}}" hidden>
+                         <input name="date" value="{{ start_date}}" hidden>
+
+                         <select class="form-control" name="time"  style="width: 150px" type="text" value="" >
+                             {% for time in time_list %}
+                                 <option>{{ time }}</option>
+                             {% endfor %}
+
+
+                         </select>
+
+                            <!--<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>-->
+                        </div>
+
+                                <!--
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepicker1').datetimepicker();
+                                    });
+                                </script>
+                                -->
+                    <div class="form-group" style="padding-top: 20px">
+                        <button type="submit"  class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-default" style="margin-left: 10px" onclick="window.location.href='/reservation/'">Cancel</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+            </div>
+        </div>
+
+</div>
+    </div>
+    <script src="{% static 'bootstrap-3.3.7/dist/js/bootstrap.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7/dist/js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+<script src="{% static 'js/locales/bootstrap-datetimepicker.fr.js' %}"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>
+<script>$('.form_datetime').datetimepicker({
+        weekStart: 0, //一周从哪一天开始
+        //todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        format:'yyyy-mm-dd',
+        pickerPosition: "bottom-left",
+        minView:2,
+        maxView:4,
+        startDate: '+1d'
+
+        //showMeridian: 1
+    });</script>
+
+{% endblock %}
+</body>
+</html>

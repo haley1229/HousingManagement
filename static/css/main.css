@@ -1,0 +1,41 @@
+body {
+    background-color: #eee;
+  }
+.main_content {
+    background: #ffffff;
+    width: 90%;
+    margin: auto;
+    padding-bottom: 20px;
+  }
+.sub_content {
+    width: 90%;
+    margin: auto;
+  }
+.left_sub_content {
+    width: 40%;
+    float:left;
+}
+.right_sub_content {
+
+    width: 60%;
+    float:right;
+
+}
+#form_format{
+    padding-right: 20px;
+    padding-top: 10px;
+}
+#custom_input{
+    width: 250px;
+}
+#custom_input1{
+    width: 500px;
+}
+#custom_input2{
+    width: 450px;
+}
+.form-group label:after {
+ content: ' *';
+ color: #FF0000;
+ font-size: 100%;
+}

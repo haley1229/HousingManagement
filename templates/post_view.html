@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+</head>
+<script language="JavaScript">
+    function clock(){
+        now = new Date();
+        var year=now.getFullYear();
+        var month=now.getMonth();
+        var date=now.getDate();
+
+
+        now_date=year+"-"+month+"-"+date;
+        start_date = document.getElementById("date").innerText;
+        if (start_date > now_date){
+            //document.getElementById("info1").innerHTML=start_date;
+            document.getElementById('reserve_edit').disabled=false;
+            document.getElementById('reserve_delete').disabled=false;
+        }
+
+
+    }
+</script>
+<body onload="clock()">
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+
+    <div class="main_content">
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li>
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                        <li >
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                        <li class="active">
+                            <a href="/forum/">Forum</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <div class="sub_content">
+            {% for p in post_detail %}
+                <div style="padding-top: 20px">
+                    <ol class="breadcrumb">
+                      <li><a href="/forum/">Forum</a></li>
+                      <li><a href="#">{{ p.post_tag  }}</a></li>
+                      <li class="active">{{ p.post_subject  }}</li>
+                    </ol>
+                </div>
+                    <!--post detail part-->
+                    <div style="width:90%;margin: 0 auto;">
+
+                        <h4>{{ p.post_subject }}</h4>
+                        <div class="media" >
+                              <div class="media-left">
+                                <a href="#">
+                                    <span class="media-object" >
+                                        <i class="glyphicon glyphicon-user" style="font-size: 50px"></i>
+
+                                    </span>
+                                </a>
+                              </div>
+                              <div class="media-body" >
+                                <p class="media-heading">{{ p.firstname }}&nbsp;{{ p.lastname }}</p>
+                                <span style="color: #8c8c8c">{{ p.post_date }}</span>
+                              </div>
+                              <div style="padding-left: 60px; padding-top: 10px" >
+                                <pre style="margin-left:-10px;background-color: white; border: white; font-size:16px;font-family: Arial ">{{ p.post_message }}</pre>
+
+                                {% if p.post_img != "" %}
+                                        <img  src="../media/{{ p.post_img }}" width="400" height="233">
+                                        <br>
+                                    {% endif %}
+                                    <div style="margin-top: 10px"><a href="/post_reply/?p_id={{ p.post_id }}">Reply</a></div>
+                                </div>
+                        </div>                           {% endfor %}
+
+
+                    </div>
+                <div class="panel panel-default" style="margin-top: 20px">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" style="display: inline">Reply</h3>
+                        {% for c in count %}
+                            <span class="badge">{{ c.0 }}</span>
+
+                           {% endfor %}
+                    </div>
+                    <div class="panel-body">
+                        <!--reply detail part-->
+                        <!--
+                        <div class="panel panel-default" style="width:90%;margin: 0 auto;">
+                        -->
+                        {% for r in reply_detail %}
+
+                                <div style="width:85%;margin: 0 auto;">
+
+                                <h4>{{ r.reply_subject }}</h4>
+                                <div class="media" >
+                              <div class="media-left">
+                                <a href="#">
+                                    <span class="media-object" >
+                                        <i class="glyphicon glyphicon-user" style="font-size: 50px"></i>
+
+                                    </span>
+                                </a>
+                              </div>
+                              <div class="media-body" >
+                                <p class="media-heading">{{ r.firstname }}&nbsp;{{ r.lastname }}</p>
+                                <span style="color: #8c8c8c">{{ r.reply_date }}</span>
+                              </div>
+                                <div style="padding-left: 60px; padding-top: 10px" >
+                                    <pre style="margin-left:-10px;background-color: white; border: white; font-size:16px;font-family: Arial ">{{ r.reply_message }}</pre>
+                                    {% if r.reply_img != "" %}
+                                        <img  src="../media/{{ r.reply_img }}" width="400" height="233">
+                                        <br>
+                                    {% endif %}
+
+                                    <div style="margin-top: 10px"><a href="/reply_reply/?r_id={{ r.reply_id }}">Reply</a></div>
+                                </div>
+
+                            </div>
+
+                            </div>
+                                <hr>
+
+
+
+                        {% endfor %}
+                        <!--
+                        </div>
+                        -->
+                        </div>
+                    </div>
+
+                </div>
+
+        </div>
+        </div>
+
+</div>
+    </div>
+
+{% endblock %}
+
+
+</body>
+</html>

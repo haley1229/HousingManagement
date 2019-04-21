@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+</head>
+
+<body >
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/main.css' %}" rel="stylesheet"/>{% endblock %}
+
+{% block content %}
+
+    <div class="main_content">
+    <div class="container-fluid">
+	<div class="row-fluid">
+        <div class="sub_content" style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/payment/">Payment</a>
+                        </li>
+                        <li>
+                            <a href="/maintenance/">Maintenance</a>
+                        </li>
+                        <li >
+                            <a href="/reservation/">Reservation</a>
+                        </li>
+                        <li class="active">
+                            <a href="/forum/">Forum</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <div class="sub_content">
+        <div style="width:100%; padding-top:30px; padding-bottom:-20px; position: relative">
+                <h1 style="display:inline">Forum</h1>
+                <p>View and add posts below.</p>
+                <span style="position: absolute; bottom: 0;right:0">
+                    <form class="form-search" method="post" action="/mypost/">
+                        {% csrf_token %}
+
+				        <input class="input-medium search-query" type="text" style="height: 32px" name="search" />
+                        <button type="submit" class="btn btn-default">Search</button>
+			        </form>
+                </span>
+            </div>
+
+            <hr>
+            <div >
+                <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/post_add/'">
+                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;Add a post
+                </button>
+            </div>
+                <div  style="padding-top: 20px">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li  >
+                            <a href="/forum/">Post</a>
+                        </li>
+                        <li class="active">
+                            <a href="/mypost/">My Post</a>
+                        </li>
+                        <li>
+                            <a href="/myreply/">My Reply</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="width:100%; padding-top:30px; padding-bottom:-20px; position: relative">
+                <h3 style="display:inline">Post</h3>
+                <span style="position: absolute; bottom: 0;right:0">Order by: <a href="/mypost/?order=recent">Most Recent</a>&nbsp;| &nbsp;<a href="/mypost/?order=popular">Most Popular</a></span>
+            </div>
+            <hr style="margin-top:10px">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Tag</th>
+
+                    <th>User</th>
+
+                    <th>Date</th>
+                    <th>Reply</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for p in post_list %}
+                    <tr>
+                        <td><a href="/post_view/?id={{ p.0 }}">{{ p.1 }}</a></td>
+                        {% if p.3 == "General" %}
+                            <td><span class="label label-default">General</span></td>
+                        {% elif p.3 == "Study" %}
+                            <td><span class="label label-primary">Study</span></td>
+                        {% elif p.3 == "Activity" %}
+                            <td><span class="label label-warning">Activity</span></td>
+                         {% elif p.3 == "Trade" %}
+                            <td><span class="label label-success">Trade</span></td>
+                        {% endif %}
+                        <td>{{ p.4 }}&nbsp;{{ p.5 }}</td>
+                        <td >{{ p.2 }}</td>
+                        <td>{{ p.6 }}</td>
+                        <td><button id="post_delete" onclick='window.location.href="/post_delete/?id={{ p.0 }}"'>delete</button></td>
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+</div>
+    </div>
+
+{% endblock %}
+
+
+</body>
+</html>
