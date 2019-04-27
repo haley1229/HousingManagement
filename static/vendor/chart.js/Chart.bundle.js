@@ -30,6 +30,7 @@ module.exports = {
    keyword: keyword
 }
 
+
 function getRgba(string) {
    if (!string) {
       return;
